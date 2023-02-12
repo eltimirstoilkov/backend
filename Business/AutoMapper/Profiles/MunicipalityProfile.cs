@@ -4,10 +4,10 @@ using Persistence.Entities.v1;
 
 namespace Business.AutoMapper.Profiles;
 
-public class TariffTypeProfile : Profile
+public class MunicipalityProfile : Profile
 {
-    public TariffTypeProfile()
+    public MunicipalityProfile()
     {
-        CreateMap<VehicleTariffType, TariffResponse>();
+        CreateMap<Municipality, MunicipalityResponse>();
     }
 }
