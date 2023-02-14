@@ -6,9 +6,9 @@ public interface IValidationService
 
     Task ExistingTownAsync(int id);
              
-    Task ExistingVehicleTarriffAsync(int id);
+    Task ExistingVehicleTariffAsync(int id);
              
-    Task ExistingVehicleTyepAsync(int id);
+    Task ExistingVehicleTypeAsync(int id);
              
     Task ExistingPurposeTypeAsync(int id);
 }
