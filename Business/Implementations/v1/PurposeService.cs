@@ -5,7 +5,7 @@ using Business.Models.v1.Responses;
 using Microsoft.Extensions.Logging;
 using Persistence.Entities.v1;
 using Persistence.Interfaces.v1;
-using static Business.Constants;
+using static Persistence.Util.Constants;
 
 namespace Business.Implementations.v1;
 
@@ -34,11 +34,11 @@ public class PurposeService : IPurposeService
 
     public async Task<PurposeResponse> GetByIdAsync(int id)
     {
-        var purpose = await _purposeRepository.GetByIdAsync(id);
+        VehiclePurpose? purpose = await _purposeRepository.GetByIdAsync(id);
         if (purpose is null)
         {
             _logger.LogError("No valid purpose was found with id {PurposeId}", id);
-            throw new PurposeNotFoundException(PurposeNotFound);
+            throw new EntityNotFoundException(ExceptionMessages.PurposeNotFound);
         }
 
         var response = _mapper.Map<PurposeResponse>(purpose);

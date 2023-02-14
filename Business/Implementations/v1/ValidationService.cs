@@ -1,8 +1,9 @@
-﻿using Business.Interfaces.v1;
+﻿using Business.Exceptions;
+using Business.Interfaces.v1;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Context.v1;
 using Persistence.Entities.v1;
-using static Business.Constants;
+using static Persistence.Util.Constants;
 
 namespace Business.Implementations.v1;
 
@@ -18,40 +19,40 @@ public class ValidationService : IValidationService
     public async Task ExecuteValidationAsync(int cityId, int tariffId, int typeId, int purposeId)
     {
         await ExistingTownAsync(cityId);
-        await ExistingVehicleTarriffAsync(tariffId);
+        await ExistingVehicleTariffAsync(tariffId);
         await ExistingPurposeTypeAsync(typeId);
-        await ExistingPurposeTypeAsync(purposeId);
+        await ExistingVehicleTypeAsync(typeId);
     }
 
     public async Task ExistingAgeGroup(int? ownerAge)
     {
         if (ownerAge is null)
         {
-                
+
         }
     }
 
     public async Task ExistingTownAsync(int id)
     {
         Municipality? result = await _dbContext.Municipalities.FirstOrDefaultAsync(x => x.Id == id)
-                               ?? throw new ArgumentException(string.Format(NotFoundErrorMessage, "Municipality", id));
+                               ?? throw new ArgumentException(ExceptionMessages.MunicipalityNotFound);
     }
 
-    public async Task ExistingVehicleTarriffAsync(int id)
+    public async Task ExistingVehicleTariffAsync(int id)
     {
         VehicleTariffType? result = await _dbContext.VehicleTariffTypes.FirstOrDefaultAsync(x => x.Id == id)
-                                    ?? throw new ArgumentException(string.Format(NotFoundErrorMessage, "Tariff Type", id));
+                                    ?? throw new EntityNotFoundException(ExceptionMessages.TariffTypeNotFound);
     }
 
-    public async Task ExistingVehicleTyepAsync(int id)
+    public async Task ExistingVehicleTypeAsync(int id)
     {
         VehicleType? result = await _dbContext.VehicleTypes.FirstOrDefaultAsync(x => x.Id == id)
-                              ?? throw new ArgumentException(string.Format(NotFoundErrorMessage, "Vehicle Type", id));
+                              ?? throw new EntityNotFoundException(ExceptionMessages.VehicleTypeNotFound);
     }
 
     public async Task ExistingPurposeTypeAsync(int id)
     {
         VehiclePurpose? result = await _dbContext.VehiclePurposes.FirstOrDefaultAsync(x => x.Id == id)
-                          ?? throw new ArgumentException(string.Format(NotFoundErrorMessage, "Purpose", id));
+                          ?? throw new ArgumentException(ExceptionMessages.PurposeNotFound);
     }
 }
