@@ -16,6 +16,8 @@ public static class ConfigureAutoMapperServices
             configuration.AddProfile(new TariffTypeProfile());
             configuration.AddProfile(new MunicipalityProfile());
             configuration.AddProfile(new CalculationProfile());
+            configuration.AddProfile(new AgeGroupProfile());
+            configuration.AddProfile(new VehicleTypeProfile());
         });
 
         var mapper = config.CreateMapper();

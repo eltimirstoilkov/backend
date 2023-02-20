@@ -19,8 +19,8 @@ public class CalculationService : ICalculationService
     private readonly IAgeGroupRepository _ageGroupRepository;
     private readonly IMunicipalityRepository _municipalityRepository;
     private readonly ICalculationRepository _calculationRepository;
-    private readonly ILogger<CalculationService> _logger;
     private readonly IPurposeRepository _purposeRepository;
+    private readonly ILogger<CalculationService> _logger;
     private readonly IMapper _mapper;
 
     public CalculationService(
@@ -30,8 +30,8 @@ public class CalculationService : ICalculationService
         IAgeGroupRepository ageGroupRepository,
         IMunicipalityRepository municipalityRepository,
         ICalculationRepository calculationRepository,
-        ILogger<CalculationService> logger,
         IPurposeRepository purposeRepository,
+        ILogger<CalculationService> logger,
         IMapper mapper)
     {
         _vehicleInfoRepository = vehicleInfoRepository;
