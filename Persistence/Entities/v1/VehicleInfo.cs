@@ -3,6 +3,7 @@
 public class VehicleInfo
 {
     public Guid Id { get; set; }
+
     public string PolicyNumber { get; set; }
 
     public DateTime IssueDate { get; set; }
@@ -25,6 +26,8 @@ public class VehicleInfo
 
     public int? EngineVolumeId { get; set; }
 
+    public EngineVolume? EngineVolume { get; set; }
+
     public int MunicipalityId { get; set; }
 
     public Municipality Municipality { get; set; }
@@ -32,6 +35,8 @@ public class VehicleInfo
     public int? OwnerAge { get; set; }
 
     public int? AgeGroupId { get; set; }
+
+    public AgeGroup? AgeGroup { get; set; }
 
     public int? DamageCount { get; set; }
 

@@ -1,7 +1,8 @@
-﻿namespace Persistence.Entities.v1
+﻿namespace Persistence.Entities.v1;
+
+public class VehicleType
 {
-    public class VehicleType : BaseEntity
-    {
-        public string Type { get; set; }
-    }
+    public int Id { get; set; }
+
+    public string Description { get; set; }
 }
