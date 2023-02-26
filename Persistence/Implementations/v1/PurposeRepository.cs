@@ -14,16 +14,6 @@ public class PurposeRepository : IPurposeRepository
         _dbContext = dbContext;
     }
 
-    public VehiclePurpose Add(VehiclePurpose vehiclePurpose)
-    {
-        return _dbContext.VehiclePurposes.Add(vehiclePurpose).Entity;
-    }
-
-    public void Delete(VehiclePurpose vehiclePurpose)
-    {
-        _dbContext.VehiclePurposes.Remove(vehiclePurpose);
-    }
-
     public async Task<IList<VehiclePurpose>> GetAllAsync()
     {
         List<VehiclePurpose> purposes = await _dbContext.VehiclePurposes.ToListAsync();
@@ -36,18 +26,4 @@ public class PurposeRepository : IPurposeRepository
             .FirstOrDefaultAsync(x => x.Id == id);
         return purpose;
     }
-
-    public async Task<bool> IsExistingAsync(string description)
-    {
-        bool result = await _dbContext.VehiclePurposes
-            .AnyAsync(x => x.Description == description);
-        return result;
-    }
-
-    public async Task<int> SaveChangesAsync()
-    {
-        int result = await _dbContext.SaveChangesAsync();
-        return result;
-    }
-
 }
