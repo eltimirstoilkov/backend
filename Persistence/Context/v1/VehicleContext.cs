@@ -22,6 +22,12 @@ public class VehicleContext : DbContext
 
     public DbSet<VehicleTariffType> VehicleTariffTypes { get; set; }
 
+    public DbSet<EngineVolume> EngineVolumes { get; set; }
+
+    public DbSet<AgeGroup> AgeGroups { get; set; }
+
+    public DbSet<Calculation> Calculations { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         VehicleTypeConfiguration(modelBuilder.Entity<VehicleType>());
@@ -29,7 +35,9 @@ public class VehicleContext : DbContext
         MunicipalitiesConfiguration(modelBuilder.Entity<Municipality>());
         TariffTypeConfiguration(modelBuilder.Entity<VehicleTariffType>());
         VehicleInfoConfiguration(modelBuilder.Entity<VehicleInfo>());
-        
+        AgeGroupConfiguration(modelBuilder.Entity<AgeGroup>());
+        EngineVolumeConfiguration(modelBuilder.Entity<EngineVolume>());
+
         base.OnModelCreating(modelBuilder);
     }
 
@@ -82,7 +90,7 @@ public class VehicleContext : DbContext
 
         vehicleInfo.Property(x => x.TariffTypeId)
             .HasColumnName("VehicleTariffTypeId");
-        
+
         vehicleInfo
             .HasOne(x => x.TariffType)
             .WithMany()
@@ -100,11 +108,46 @@ public class VehicleContext : DbContext
             .WithMany()
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
-        
+
         vehicleInfo
             .HasOne(x => x.Municipality)
             .WithMany()
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
+
+        vehicleInfo
+            .HasOne(x => x.EngineVolume)
+            .WithMany()
+            .OnDelete(DeleteBehavior.Restrict);
+
+        vehicleInfo
+            .HasOne(x => x.AgeGroup)
+            .WithMany()
+            .OnDelete(DeleteBehavior.Restrict);
+    }
+
+    public void AgeGroupConfiguration(EntityTypeBuilder<AgeGroup> ageGroup)
+    {
+        ageGroup
+            .HasKey(x => x.Id);
+
+        ageGroup
+            .Property(x => x.Description)
+            .IsRequired().IsUnicode(true)
+            .HasMaxLength(100);
+
+        ageGroup
+            .Property(x => x.Multiplier)
+            .HasPrecision(4, 2);
+    }
+
+    public void EngineVolumeConfiguration(EntityTypeBuilder<EngineVolume> ageGroup)
+    {
+        ageGroup
+            .HasKey(x => x.Id);
+
+        ageGroup
+            .Property(x => x.Multiplier)
+            .HasPrecision(4, 2);
     }
 }
