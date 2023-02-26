@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Persistence.Context.v1;
-using Persistence.Entities.v1;
 using Persistence.Interfaces.v1;
 
 namespace Persistence.Implementations.v1;
@@ -13,42 +12,22 @@ public class VehicleInfoRepository : IVehicleInfoRepository
     {
         _dbContext = dbContext;
     }
-
-    public void Add(VehicleInfo entity)
+    
+    public async Task<decimal> GetTotalPendingAmountAsync()
     {
-        _dbContext.Add(entity);
-    }
-
-    public async Task<IList<VehicleInfo>> GetAllAsync()
-    {
-        return await _dbContext.VehicleInfos
-            .Include(x => x.VehicleType)
-            .Include(x => x.Municipality)
-            .Include(x => x.VehiclePurpose)
-            .Include(x => x.TariffType)
-            .Take(20)
-            .ToListAsync();
-    }
-
-    public async Task<VehicleInfo?> GetByIdAsync(Guid id)
-    {
-        VehicleInfo? info =  await _dbContext.VehicleInfos
-            .Include(x => x.VehicleType)
-            .Include(x => x.Municipality)
-            .Include(x => x.VehiclePurpose)
-            .Include(x => x.TariffType)
-            .FirstOrDefaultAsync(x => x.Id == id);
-
-        return info;
+         decimal? pendingAmount = await _dbContext.VehicleInfos.SumAsync(vi => vi.PendingAmount);
+         return pendingAmount ?? 0.0M;
     }
     
-    public void Delete(VehicleInfo entity)
+    public async Task<decimal> GetTotalPaidAmountAsync()
     {
-        _dbContext.Remove(entity);
+        decimal? paidAmount = await _dbContext.VehicleInfos.SumAsync(vi => vi.PaidAmount);
+        return paidAmount ?? 0.0M;
     }
-
-    public async Task SaveChangesAsync()
+    
+    public async Task<int> GetPolicyCountAsync()
     {
-        await _dbContext.SaveChangesAsync();
+        int count = await _dbContext.VehicleInfos.CountAsync();
+        return count;
     }
 }
