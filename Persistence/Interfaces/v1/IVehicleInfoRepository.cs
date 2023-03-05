@@ -1,17 +1,10 @@
-﻿using Persistence.Entities.v1;
-
-namespace Persistence.Interfaces.v1;
+﻿namespace Persistence.Interfaces.v1;
 
 public interface IVehicleInfoRepository
 {
-    void Add(VehicleInfo entity);
+    Task<decimal> GetTotalPendingAmountAsync();
 
-    Task<IList<VehicleInfo>> GetAllAsync();
+    Task<decimal> GetTotalPaidAmountAsync();
 
-
-    Task<VehicleInfo?> GetByIdAsync(Guid id);
-
-    void Delete(VehicleInfo entity);
-
-    Task SaveChangesAsync();
+    Task<int> GetPolicyCountAsync();
 }
